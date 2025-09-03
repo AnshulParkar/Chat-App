@@ -9,16 +9,17 @@
     <h1>
         Chatting
     </h1>
-    <button onclick="createConnection()">Create new connection</button>
+    <input type="text" id="message" placeholder="Enter message" />
+    <button id="sendBtn">Send</button>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        function createConnection() {
-            const socket = io();
+        const socket = io();
 
-            socket.on("connect", () => {
-                console.log("Connected to server");
-            });
-        }
+        document.getElementById('sendBtn').addEventListener('click', () => {
+            const messageInput = document.getElementById('message').value;
+            console.log('Sending message:', messageInput);
+            socket.emit('chat message', messageInput);
+        });
     </script>
 </body>
 </html>

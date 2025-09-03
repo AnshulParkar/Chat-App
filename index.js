@@ -2,6 +2,7 @@ const http = require("http")
 const express = require("express")
 const path = require("path")
 const { Server } = require("socket.io");
+const { Socket } = require("dgram");
 
 const app = express();
 const server = http.createServer(app);
@@ -15,6 +16,9 @@ const io = new Server(server, {
 // Socket.io
 io.on("connection", (client) => {
     console.log("A user connected", client.id);
+    client.on('chat message', (msg) => {
+        console.log('Received message:', msg);
+    });
 });
 
 app.use(express.static(path.resolve("public")));
